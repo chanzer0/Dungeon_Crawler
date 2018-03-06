@@ -1,5 +1,5 @@
 # Dungeon Crawlers
-==================
+
 ## Running the game
 To run the game, you must have a valid C compiler. Download the files as a .zip or clone the repository to your machine. To compile, open a shell and type 'make' into the command line. This will execute the Makefile and compile all necessary objects and binaries.
 
