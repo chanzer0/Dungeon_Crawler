@@ -1,0 +1,16 @@
+My code for this week meets all the following requirements as given by the assignment pdf:
+
+1) Uses ncurses to display everything instead of continual printf()
+
+2) Has staircases (up and down) that the PC can go through to generate a new dungeon
+	**note**: currently, the PC does not get placed correctly when making new dungeon
+
+3) User inputs control the PC movement, and inputs are executed immediately (no ENTER required)
+
+4) 'm' puts up a list of monsters and their position relative to the PC, ESC will close it
+	**note**: The 'ESC' key takes a second to register, please give it some time
+	**note**: Scrolling is not yet implemented
+
+5) Dungeon only fills lines 1-21 on the terminal, top 1 and bottom 2 are left blank for later info
+
+6) ...
