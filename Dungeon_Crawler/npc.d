@@ -1,2 +1,2 @@
-npc.o: npc.c utils.h npc.h dims.h dungeon.h heap.h macros.h character.h \
- move.h path.h event.h pc.h
+npc.o: npc.cpp utils.h npc.h dims.h character.h dungeon.h heap.h macros.h \
+ descriptions.h dice.h move.h path.h event.h pc.h

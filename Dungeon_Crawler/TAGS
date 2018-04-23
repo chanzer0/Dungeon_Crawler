@@ -1,29 +1,123 @@
 
-character.c,54
-void character_delete(9,117
-uint32_t can_see(24,342
-
-character.h,553
+character.h,793
 # define CHARACTER_H2,20
-typedef struct dungeon dungeon_t;8,84
-typedef struct npc npc_t;9,118
-typedef struct pc pc_t;10,144
-typedef struct dice_t dice_t;11,168
-typedef enum kill_type 13,199
-  kill_direct,14,224
-  kill_avenged,15,239
-  num_kill_types16,255
-} kill_type_t;17,272
-typedef struct character 19,288
-  char symbol;20,315
-  pair_t position;21,330
-  int32_t speed;22,349
-  uint32_t alive;23,366
-  uint32_t sequence_number;31,931
-  npc_t *npc;npc32,959
-  pc_t *pc;pc33,973
-  uint32_t kills[kills34,985
-} character_t;35,1019
+typedef enum kill_type 11,143
+  kill_direct,12,168
+  kill_avenged,13,183
+  num_kill_types14,199
+} kill_type_t;15,216
+class character 19,245
+  virtual ~character(character::~character21,272
+  char symbol;character::symbol22,298
+  pair_t position;character::position23,313
+  int32_t speed;character::speed24,332
+  uint32_t alive;character::alive25,349
+  std::vector<uint32_t> color;character::color26,367
+  uint32_t hp;character::hp27,398
+  const dice *damage;character::damage28,413
+  const char *name;character::name29,435
+  uint32_t sequence_number;character::sequence_number37,1002
+  uint32_t kills[character::kills38,1030
+  inline uint32_t get_color(character::get_color39,1064
+  inline char get_symbol(character::get_symbol40,1145
+
+descriptions.h,4236
+# define DESCRIPTIONS_H2,23
+# undef swap5,69
+typedef struct dungeon dungeon_t;12,159
+typedef enum object_type 18,326
+  objtype_no_type,19,353
+  objtype_WEAPON,20,372
+  objtype_OFFHAND,21,390
+  objtype_RANGED,22,409
+  objtype_LIGHT,23,427
+  objtype_ARMOR,24,444
+  objtype_HELMET,25,461
+  objtype_CLOAK,26,479
+  objtype_GLOVES,27,496
+  objtype_BOOTS,28,514
+  objtype_AMULET,29,531
+  objtype_RING,30,549
+  objtype_SCROLL,31,565
+  objtype_BOOK,32,583
+  objtype_FLASK,33,599
+  objtype_GOLD,34,616
+  objtype_AMMUNITION,35,632
+  objtype_FOOD,36,654
+  objtype_WAND,37,670
+  objtype_CONTAINER,38,686
+  objtype_POTION39,707
+} object_type_t;40,724
+class monster_description 45,789
+  std::string name,monster_description::name47,827
+  std::string name, description;monster_description::description47,827
+  char symbol;monster_description::symbol48,860
+  std::vector<uint32_t> color;monster_description::color49,875
+  uint32_t abilities;monster_description::abilities50,906
+  dice speed,monster_description::speed51,928
+  dice speed, hitpoints,monster_description::hitpoints51,928
+  dice speed, hitpoints, damage;monster_description::damage51,928
+  uint32_t rarity;monster_description::rarity52,961
+  uint32_t num_alive,monster_description::num_alive53,980
+  uint32_t num_alive, num_killed;monster_description::num_killed53,980
+  inline bool can_be_generated(monster_description::can_be_generated54,1014
+  inline bool pass_rarity_roll(monster_description::pass_rarity_roll59,1162
+  monster_description(monster_description::monster_description65,1260
+  char get_symbol(monster_description::get_symbol80,1852
+  inline void birth(monster_description::birth82,1937
+  inline void die(monster_description::die86,1984
+  inline void destroy(monster_description::destroy91,2047
+class object_description 99,2155
+  std::string name,object_description::name101,2192
+  std::string name, description;object_description::description101,2192
+  object_type_t type;object_description::type102,2225
+  uint32_t color;object_description::color103,2247
+  dice hit,object_description::hit104,2265
+  dice hit, damage,object_description::damage104,2265
+  dice hit, damage, dodge,object_description::dodge104,2265
+  dice hit, damage, dodge, defence,object_description::defence104,2265
+  dice hit, damage, dodge, defence, weight,object_description::weight104,2265
+  dice hit, damage, dodge, defence, weight, speed,object_description::speed104,2265
+  dice hit, damage, dodge, defence, weight, speed, attribute,object_description::attribute104,2265
+  dice hit, damage, dodge, defence, weight, speed, attribute, value;object_description::value104,2265
+  bool artifact;object_description::artifact105,2334
+  uint32_t rarity;object_description::rarity106,2351
+  uint32_t num_generated;object_description::num_generated107,2370
+  uint32_t num_found;object_description::num_found108,2396
+  object_description(object_description::object_description110,2427
+  inline bool can_be_generated(object_description::can_be_generated118,2800
+  inline bool pass_rarity_roll(object_description::pass_rarity_roll122,2937
+  inline const std::string &get_name(object_description::get_name143,3650
+  inline const std::string &get_description(object_description::get_description144,3712
+  inline const object_type_t get_type(object_description::get_type145,3788
+  inline const uint32_t get_color(object_description::get_color146,3851
+  inline const dice &get_hit(object_description::get_hit147,3911
+  inline const dice &get_damage(object_description::get_damage148,3964
+  inline const dice &get_dodge(object_description::get_dodge149,4023
+  inline const dice &get_defence(object_description::get_defence150,4080
+  inline const dice &get_weight(object_description::get_weight151,4141
+  inline const dice &get_speed(object_description::get_speed152,4200
+  inline const dice &get_attribute(object_description::get_attribute153,4257
+  inline const dice &get_value(object_description::get_value154,4322
+  inline void generate(object_description::generate155,4379
+  inline void destroy(object_description::destroy156,4425
+  inline void find(object_description::find157,4470
+
+dice.h,539
+# define DICE_H2,15
+class dice 7,75
+  int32_t base;dice::base9,98
+  uint32_t number,dice::number10,114
+  uint32_t number, sides;dice::sides10,114
+  dice(dice::dice12,149
+  dice(dice::dice15,197
+  inline void set(dice::set19,304
+  inline void set_base(dice::set_base25,452
+  inline void set_number(dice::set_number29,520
+  inline void set_sides(dice::set_sides33,597
+  inline int32_t get_base(dice::get_base39,738
+  inline int32_t get_number(dice::get_number43,797
+  inline int32_t get_sides(dice::get_sides47,860
 
 dims.h,147
 # define DIMS_H2,15
@@ -34,122 +128,88 @@ typedef enum dim 7,190
 } dim_t;11,238
 typedef int16_t pair_t[pair_t13,248
 
-dungeon.c,1351
-#define DUMP_HARDNESS_IMAGES 15,242
-typedef struct corridor_path 17,274
-  heap_node_t *hn;hn18,305
-  uint8_t pos[pos19,324
-  uint8_t from[from20,342
-  int32_t cost;21,361
-} corridor_path_t;22,377
-static uint32_t adjacent_to_room(42,816
-static uint32_t is_open_space(50,1077
-static int32_t corridor_path_cmp(55,1176
-static void dijkstra_corridor(59,1326
-static void dijkstra_corridor_inv(158,5063
-#define hardnesspair_inv(211,6385
-static int connect_two_rooms(261,9056
-static int create_cycle(280,9708
-static int connect_rooms(322,11273
-int gaussian[gaussian335,11466
-typedef struct queue_node 343,11622
-  int x,344,11650
-  int x, y;344,11650
-  struct queue_node *next;next345,11662
-} queue_node_t;346,11689
-static int smooth_hardness(348,11706
-static int empty_dungeon(507,15975
-static int place_rooms(528,16369
-static int make_rooms(565,17556
-int gen_dungeon(587,18116
-void render_dungeon(622,19201
-void delete_dungeon(668,20466
-void init_dungeon(675,20600
-int write_dungeon_map(682,20757
-int write_rooms(695,20986
-uint32_t calculate_dungeon_size(715,21405
-int write_dungeon(722,21627
-int read_dungeon_map(781,23010
-int read_rooms(804,23608
-int calculate_num_rooms(858,25425
-int read_dungeon(866,25665
-int read_pgm(941,27479
-void render_distance_map(1026,29882
-void render_tunnel_distance_map(1068,30980
-
-dungeon.h,1516
+dungeon.h,2382
 # define DUNGEON_H2,18
-#define DUNGEON_X 9,122
-#define DUNGEON_Y 10,156
-#define MIN_ROOMS 11,190
-#define MAX_ROOMS 12,223
-#define ROOM_MIN_X 13,256
-#define ROOM_MIN_Y 14,289
-#define ROOM_MAX_X 15,322
-#define ROOM_MAX_Y 16,356
-#define VISUAL_RANGE 17,389
-#define PC_SPEED 18,423
-#define MAX_MONSTERS 19,457
-#define SAVE_DIR 20,491
-#define DUNGEON_SAVE_FILE 21,532
-#define DUNGEON_SAVE_SEMANTIC 22,573
-#define DUNGEON_SAVE_VERSION 23,619
-#define mappair(25,654
-#define mapxy(26,711
-#define hardnesspair(27,746
-#define hardnessxy(28,813
-#define charpair(29,858
-#define charxy(30,922
-typedef enum __attribute__ ((__packed__)) terrain_type 32,965
-  ter_debug,33,1022
-  ter_wall,34,1035
-  ter_wall_immutable,35,1047
-  ter_floor,36,1069
-  ter_floor_room,37,1082
-  ter_floor_hall,38,1100
-  ter_staircase_up,39,1118
-  ter_staircase_down,40,1138
-} terrain_type_t;41,1160
-typedef struct room 43,1179
-  pair_t position;44,1201
-  pair_t size;45,1220
-} room_t;46,1235
-typedef struct dungeon 48,1246
-  uint32_t num_rooms;49,1271
-  room_t *rooms;rooms50,1293
-  terrain_type_t map[map51,1310
-  uint8_t hardness[hardness60,1963
-  uint8_t pc_distance[pc_distance61,2005
-  uint8_t pc_tunnel[pc_tunnel62,2050
-  character_t *character[character63,2093
-  character_t pc;64,2141
-  heap_t events;65,2159
-  uint16_t num_monsters;66,2176
-  uint16_t max_monsters;67,2201
-  uint32_t character_sequence_number;68,2226
-  uint32_t time;74,2650
-  uint32_t is_new;75,2667
-} dungeon_t;76,2686
+# undef swap6,78
+# undef min7,91
+#define DUNGEON_X 12,174
+#define DUNGEON_Y 13,208
+#define MIN_ROOMS 14,242
+#define MAX_ROOMS 15,275
+#define ROOM_MIN_X 16,308
+#define ROOM_MIN_Y 17,341
+#define ROOM_MAX_X 18,374
+#define ROOM_MAX_Y 19,408
+#define PC_VISUAL_RANGE 20,441
+#define NPC_VISUAL_RANGE 21,474
+#define PC_SPEED 22,508
+#define MAX_MONSTERS 23,542
+#define MAX_OBJECTS 24,576
+#define SAVE_DIR 25,610
+#define DUNGEON_SAVE_FILE 26,651
+#define DUNGEON_SAVE_SEMANTIC 27,692
+#define DUNGEON_SAVE_VERSION 28,738
+#define MONSTER_DESC_FILE 29,772
+#define OBJECT_DESC_FILE 30,822
+#define MAX_INVENTORY 31,871
+#define mappair(33,906
+#define mapxy(34,963
+#define hardnesspair(35,998
+#define hardnessxy(36,1065
+#define charpair(37,1110
+#define charxy(38,1178
+#define objpair(39,1224
+#define objxy(40,1284
+typedef enum __attribute__ ((__packed__)) terrain_type 42,1323
+  ter_debug,43,1380
+  ter_unknown,44,1393
+  ter_wall,45,1408
+  ter_wall_immutable,46,1420
+  ter_floor,47,1442
+  ter_floor_room,48,1455
+  ter_floor_hall,49,1473
+  ter_stairs,50,1491
+  ter_stairs_up,51,1505
+  ter_stairs_down,52,1522
+  ter_marketplace53,1541
+} terrain_type_t;54,1559
+typedef struct room 56,1578
+  pair_t position;57,1600
+  pair_t size;58,1619
+} room_t;59,1634
+class dungeon 64,1670
+  uint32_t num_rooms;dungeon::num_rooms66,1695
+  room_t *rooms;dungeon::rooms67,1717
+  terrain_type_t map[dungeon::map68,1734
+  uint8_t hardness[dungeon::hardness77,2387
+  uint8_t pc_distance[dungeon::pc_distance78,2429
+  uint8_t pc_tunnel[dungeon::pc_tunnel79,2474
+  character *character_map[dungeon::character_map80,2517
+  object *objmap[dungeon::objmap81,2567
+  pc *PC;dungeon::PC82,2607
+  heap_t events;dungeon::events83,2617
+  uint16_t num_monsters;dungeon::num_monsters84,2634
+  uint16_t max_monsters;dungeon::max_monsters85,2659
+  uint16_t num_objects;dungeon::num_objects86,2684
+  uint16_t max_objects;dungeon::max_objects87,2708
+  uint32_t character_sequence_number;dungeon::character_sequence_number88,2732
+  uint32_t time;dungeon::time94,3156
+  uint32_t is_new;dungeon::is_new95,3173
+  uint32_t quit;dungeon::quit96,3192
+  std::vector<monster_description> monster_descriptions;dungeon::monster_descriptions97,3209
+  std::vector<object_description> object_descriptions;dungeon::object_descriptions98,3266
 
-event.c,178
-static uint32_t next_event_number(4,43
-int32_t compare_events(14,369
-event_t *new_event(new_event25,689
-event_t *update_event(update_event42,967
-void event_delete(50,1115
-
-event.h,307
+event.h,259
 # define EVENT_H2,16
-typedef struct character character_t;8,79
-typedef enum event_type 10,118
-  event_character_turn,11,144
-} event_type_t;12,168
-typedef struct event 14,185
-  event_type_t type;15,208
-  uint32_t time;16,229
-  uint32_t sequence;17,246
-    character_t *c;c19,277
-} event_t;21,302
+typedef enum event_type 8,79
+  event_character_turn,9,105
+} event_type_t;10,129
+typedef struct event 12,146
+  event_type_t type;13,169
+  uint32_t time;14,190
+  uint32_t sequence;15,207
+    character *c;c17,238
+} event_t;19,261
 
 heap.c,1009
 #undef min4,39
@@ -194,7 +254,11 @@ typedef struct heap 13,153
   void (*datum_delete)datum_delete17,269
 } heap_t;18,301
 
-macros.h,611
+io.h,58
+# define IO_H2,13
+typedef struct dungeon dungeon_t;4,28
+
+macros.h,617
 # define MACROS_H2,17
 #  define dprintf(16,213
 #  define dfprintf(17,256
@@ -211,144 +275,121 @@ macros.h,611
 # define memswap(131,6415
 # define structdup(137,6543
 # define datacmp(144,6927
-# define max2(153,7400
-# define min2(160,7576
-# define max 167,7752
-# define min 168,7770
-# define max3(170,7789
-# define min3(171,7830
-# define frand(173,7872
-# define structdup(180,7984
+#  define max2(154,7421
+#  define min2(161,7606
+#  define max 168,7789
+#  define min 169,7808
+#  define max3(171,7828
+#  define min3(172,7870
+# define frand(175,7921
+# define structdup(182,8033
 
-move.c,194
-void do_combat(17,250
-void move_character(30,571
-void do_moves(46,1052
-void dir_nearest_wall(119,3268
-uint32_t against_wall(131,3683
-uint32_t in_corner(143,4171
-uint32_t move_pc(161,4799
-
-move.h,104
+move.h,21
 # define MOVE_H2,15
-typedef struct dungeon dungeon_t;8,74
-typedef struct character character_t;9,108
 
-npc.c,1080
-void npc_delete(12,173
-static uint32_t max_monster_cells(19,232
-void gen_monsters(33,479
-void npc_next_pos_rand_tunnel(76,1896
-    uint32_t i;80,1993
-    uint8_t a[a81,2009
-void npc_next_pos_rand(121,2755
-    uint32_t i;125,2845
-    uint8_t a[a126,2861
-void npc_next_pos_line_of_sight(153,3320
-void npc_next_pos_line_of_sight_tunnel(177,4020
-void npc_next_pos_gradient(212,4839
-static void npc_next_pos_00(335,9531
-static void npc_next_pos_01(347,9928
-static void npc_next_pos_02(365,10553
-static void npc_next_pos_03(373,10863
-static void npc_next_pos_04(379,11038
-static void npc_next_pos_05(391,11442
-static void npc_next_pos_06(409,12074
-static void npc_next_pos_07(417,12391
-static void npc_next_pos_08(423,12566
-static void npc_next_pos_09(433,12807
-static void npc_next_pos_0a(443,13048
-static void npc_next_pos_0b(453,13289
-static void npc_next_pos_0c(463,13530
-static void npc_next_pos_0d(473,13778
-static void npc_next_pos_0e(483,14026
-static void npc_next_pos_0f(493,14274
-void npc_next_pos(526,15174
-uint32_t dungeon_has_npcs(534,15380
-
-npc.h,1235
+npc.h,1352
 # define NPC_H2,14
-# define NPC_SMART 8,72
-# define NPC_TELEPATH 9,110
-# define NPC_TUNNEL 10,148
-# define NPC_ERRATIC 11,186
-# define NPC_BIT04 12,224
-# define NPC_BIT05 13,262
-# define NPC_BIT06 14,300
-# define NPC_BIT07 15,338
-# define NPC_BIT08 16,376
-# define NPC_BIT09 17,414
-# define NPC_BIT10 18,452
-# define NPC_BIT11 19,490
-# define NPC_BIT12 20,528
-# define NPC_BIT13 21,566
-# define NPC_BIT14 22,604
-# define NPC_BIT15 23,642
-# define NPC_BIT16 24,680
-# define NPC_BIT17 25,718
-# define NPC_BIT18 26,756
-# define NPC_BIT19 27,794
-# define NPC_BIT20 28,832
-# define NPC_BIT21 29,870
-# define NPC_BIT22 30,908
-# define NPC_BIT23 31,946
-# define NPC_BIT24 32,984
-# define NPC_BIT25 33,1022
-# define NPC_BIT26 34,1060
-# define NPC_BIT27 35,1098
-# define NPC_BIT28 36,1136
-# define NPC_BIT29 37,1174
-# define NPC_BIT30 38,1212
-# define NPC_BIT31 39,1250
-# define has_characteristic(41,1289
-typedef struct dungeon dungeon_t;44,1399
-typedef struct character character_t;45,1433
-typedef uint32_t npc_characteristics_t;46,1471
-typedef struct npc 48,1512
-  npc_characteristics_t characteristics;49,1533
-  uint32_t have_seen_pc;50,1574
-  pair_t pc_last_known_position;51,1599
-} npc_t;53,1633
+# define NPC_SMART 9,96
+# define NPC_TELEPATH 10,134
+# define NPC_TUNNEL 11,172
+# define NPC_ERRATIC 12,210
+# define NPC_PASS_WALL 13,248
+# define NPC_DESTROY_OBJ 14,286
+# define NPC_PICKUP_OBJ 15,324
+# define NPC_UNIQ 16,362
+# define NPC_BOSS 17,400
+# define NPC_BIT09 18,438
+# define NPC_BIT10 19,476
+# define NPC_BIT11 20,514
+# define NPC_BIT12 21,552
+# define NPC_BIT13 22,590
+# define NPC_BIT14 23,628
+# define NPC_BIT15 24,666
+# define NPC_BIT16 25,704
+# define NPC_BIT17 26,742
+# define NPC_BIT18 27,780
+# define NPC_BIT19 28,818
+# define NPC_BIT20 29,856
+# define NPC_BIT21 30,894
+# define NPC_BIT22 31,932
+# define NPC_BIT23 32,970
+# define NPC_BIT24 33,1008
+# define NPC_BIT25 34,1046
+# define NPC_BIT26 35,1084
+# define NPC_BIT27 36,1122
+# define NPC_BIT28 37,1160
+# define NPC_BIT29 38,1198
+# define NPC_BIT30 39,1236
+# define NPC_BIT31 40,1274
+# define has_characteristic(42,1313
+# define is_unique(44,1425
+# define is_boss(45,1491
+typedef uint32_t npc_characteristics_t;49,1584
+class npc 51,1625
+  npc_characteristics_t characteristics;npc::characteristics55,1718
+  uint32_t have_seen_pc;npc::have_seen_pc56,1759
+  pair_t pc_last_known_position;npc::pc_last_known_position57,1784
+  const char *description;npc::description58,1817
+  monster_description &md;npc::md59,1844
 
-path.c,302
-static dungeon_t *dungeon;dungeon12,633
-typedef struct path 14,661
-  heap_node_t *hn;hn15,683
-  uint8_t pos[pos16,702
-} path_t;17,720
-static int32_t dist_cmp(19,731
-static int32_t tunnel_cmp(26,1085
-void dijkstra(33,1433
-#define tunnel_movement_cost(143,5925
-void dijkstra_tunnel(146,6017
+object.h,1456
+# define OBJECT_H2,17
+class object 9,103
+  const std::string &name;object::name11,128
+  const std::string &description;object::description12,155
+  object_type_t type;object::type13,189
+  uint32_t color;object::color14,211
+  pair_t position;object::position15,229
+  const dice &damage;object::damage16,248
+  int32_t hit,object::hit17,270
+  int32_t hit, dodge,object::dodge17,270
+  int32_t hit, dodge, defence,object::defence17,270
+  int32_t hit, dodge, defence, weight,object::weight17,270
+  int32_t hit, dodge, defence, weight, speed,object::speed17,270
+  int32_t hit, dodge, defence, weight, speed, attribute,object::attribute17,270
+  int32_t hit, dodge, defence, weight, speed, attribute, value;object::value17,270
+  bool seen;object::seen18,334
+  object *next;object::next19,347
+  object_description &od;object::od20,363
+  inline int32_t get_damage_base(object::get_damage_base24,468
+  inline int32_t get_damage_number(object::get_damage_number28,547
+  inline int32_t get_damage_sides(object::get_damage_sides32,630
+  int32_t get_value(object::get_value42,850
+  bool have_seen(object::have_seen43,890
+  void has_been_seen(object::has_been_seen44,926
+  int16_t *get_position(object::get_position45,966
+  void pick_up(object::pick_up46,1013
+  inline object *get_next(object::get_next53,1233
+  inline void set_next(object::set_next54,1278
+  const char *get_description(object::get_description55,1326
 
 path.h,93
 # define PATH_H2,15
 # define HARDNESS_PER_TURN 4,32
 typedef struct dungeon dungeon_t;6,63
 
-pc.c,157
-void pc_delete(13,173
-uint32_t pc_is_alive(20,233
-void place_pc(25,295
-void config_pc(35,722
-uint32_t pc_next_pos(55,1140
-uint32_t pc_in_room(288,9416
-
-pc.h,99
+pc.h,555
 # define PC_H2,13
-typedef struct dungeon dungeon_t;8,70
-typedef struct pc 10,105
-} pc_t;11,125
-
-rlg327.c,115
-const char *victory victory14,209
-const char *tombstone tombstone45,1780
-void usage(66,2831
-int main(77,3105
-
-utils.c,25
-int makedirectory(9,124
+typedef enum eq_slot 10,116
+  eq_slot_weapon,11,139
+  eq_slot_offhand,12,157
+  eq_slot_ranged,13,176
+  eq_slot_light,14,194
+  eq_slot_armor,15,211
+  eq_slot_helmet,16,228
+  eq_slot_cloak,17,246
+  eq_slot_gloves,18,263
+  eq_slot_boots,19,281
+  eq_slot_amulet,20,298
+  eq_slot_lring,21,316
+  eq_slot_rring,22,333
+  num_eq_slots23,350
+} eq_slot_t;24,365
+class pc 28,427
+  object *eq[pc::eq35,568
+  object *in[pc::in36,596
+  terrain_type_t known_terrain[pc::known_terrain49,1023
+  uint8_t visible[pc::visible50,1077
 
 utils.h,77
 # define UTILS_H2,16
